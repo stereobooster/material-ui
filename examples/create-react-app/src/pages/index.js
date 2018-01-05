@@ -1,22 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-} from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import withRoot from '../withRoot';
-
-const styles = theme => ({
-  root: {
-    textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20,
-  },
-});
+import styles from './styles';
+import loadable from 'loadable-components'
+// import DialogExample from './DialogExample';
+const DialogExample = loadable(() => import('./DialogExample'))
 
 class Index extends React.Component {
   state = {
@@ -35,23 +26,17 @@ class Index extends React.Component {
     });
   };
 
+  componentDidmount() {
+    DialogExample.load();
+  }
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
 
     return (
       <div className={classes.root}>
-        <Dialog open={open} onClose={this.handleClose}>
-          <DialogTitle>Super Secret Password</DialogTitle>
-          <DialogContent>
-            <DialogContentText>1-2-3-4-5</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={this.handleClose}>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <DialogExample open={open} handleClose={this.handleClose} />
         <Typography type="display1" gutterBottom>
           Material-UI
         </Typography>
